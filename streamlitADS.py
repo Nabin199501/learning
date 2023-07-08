@@ -1,5 +1,9 @@
 import streamlit as st
 import pandas as pd
+<<<<<<< HEAD
+=======
+import matplotlib.pyplot as plt
+>>>>>>> a3fb29967337253b77b8d3a53301d882fa34ab85
 import seaborn as sns
 import numpy as np
 from sklearn import linear_model
