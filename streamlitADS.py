@@ -1,7 +1,8 @@
+
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import linear_model
 from sklearn.linear_model import LinearRegression
@@ -18,6 +19,29 @@ if upload_file is not None:
         df = pd.read_csv(upload_file)
         data=df
         st.dataframe(data)
+        st.write("**Data Visualization**")
+
+        st.subheader("Bar Chart")
+        column = st.selectbox("Select a column for the Bar Chart", df.columns)
+        st.bar_chart(df[column].value_counts())
+
+        st.subheader("Line Chart")
+        numeric_column = df.select_dtypes(include=[int, float]).columns
+        column = st.selectbox("Select a column for the Line Chart",numeric_column)
+        st.line_chart(df[column])
+
+        st.subheader("Histogram")
+        column = st.selectbox("Select a column for the Histogram",numeric_column)
+        fig, ax = plt.subplots()
+        ax.hist(df[column])
+        st.pyplot(fig)
+
+        st.subheader("Scatter Plot")
+        x_axis = st.selectbox("select x axis for the scatter plot",numeric_column)
+        y_axis = st.selectbox("select y axis for the scatter plot",numeric_column)
+        fig, ax = plt.subplots()
+        ax.scatter(df[x_axis], df[y_axis])
+        st.pyplot(fig)
 
         st.subheader("Description of Your DataSet : ")
         st.write(data.describe())
@@ -39,28 +63,3 @@ if upload_file is not None:
         input_features.append(input_value)
         y_pred = model.predict([input_features])
         st.write("Prediction:", y_pred[0])
-
-
-st.write("**Data Visualization**")
-
-st.subheader("Bar Chart")
-column = st.selectbox("Select a column for the Bar Chart", df.columns)
-st.bar_chart(df[column].value_counts())
-
-st.subheader("Line Chart")
-numeric_column = df.select_dtypes(include=[int, float]).columns
-column = st.selectbox("Select a column for the Line Chart",numeric_column)
-st.line_chart(df[column])
-
-st.subheader("Histogram")
-column = st.selectbox("Select a column for the Histogram",numeric_column)
-fig, ax = plt.subplots()
-ax.hist(df[column])
-st.pyplot(fig)
-
-st.subheader("Scatter Plot")
-x_axis = st.selectbox("select x axis for the scatter plot",numeric_column)
-y_axis = st.selectbox("select y axis for the scatter plot",numeric_column)
-fig, ax = plt.subplots()
-ax.scatter(df[x_axis], df[y_axis])
-st.pyplot(fig)
